@@ -1,0 +1,40 @@
+.registration-container {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.registration-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+}
+
+.registration-card h2 {
+  color: #333;
+  font-size: 28px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.registration-card .subtitle {
+  color: #666;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.registration-form {
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .registration-card {
+    padding: 30px 20px;
+  }
+
+  .registration-card h2 {
+    font-size: 24px;
+  }
+}
