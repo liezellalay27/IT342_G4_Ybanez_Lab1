@@ -6,7 +6,7 @@ import './EditProfile.css';
 
 const EditProfile = () => {
   const navigate = useNavigate();
-  const { user, setUser } = useAuth();
+  const { user } = useAuth();
 
   const [formData, setFormData] = useState({
     username: user?.username || '',
@@ -62,7 +62,7 @@ const EditProfile = () => {
     setLoading(true);
 
     try {
-      const response = await authService.updateProfile(formData);
+      await authService.updateProfile(formData);
       const updatedUser = { ...user, ...formData };
       localStorage.setItem('user', JSON.stringify(updatedUser));
       
@@ -81,81 +81,131 @@ const EditProfile = () => {
     }
   };
 
+  const getInitials = () => {
+    if (formData.fullName) {
+      return formData.fullName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    }
+    return formData.username.slice(0, 2).toUpperCase();
+  };
+
   return (
     <div className="edit-profile-container">
       <div className="edit-profile-card">
-        <h2>Edit Profile</h2>
-        <p className="subtitle">Update your account information</p>
+        <div className="profile-header">
+          <div className="profile-avatar">
+            <div className="avatar-circle">{getInitials()}</div>
+          </div>
+          <h2>Edit Profile</h2>
+          <p className="subtitle">Update your account information</p>
+        </div>
 
         {message.text && (
           <div className={`message ${message.type}`}>
+            <span className="message-icon">{message.type === 'success' ? '✓' : '⚠'}</span>
             {message.text}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="edit-profile-form">
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              className={errors.username ? 'error' : ''}
-            />
-            {errors.username && <span className="error-text">{errors.username}</span>}
+          <div className="form-section">
+            <h3 className="section-title">Account Details</h3>
+            
+            <div className="form-group">
+              <label htmlFor="username">
+                <span className="label-icon">👤</span>
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                className={errors.username ? 'error' : ''}
+                placeholder="Enter your username"
+              />
+              {errors.username && <span className="error-text">{errors.username}</span>}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="email">
+                <span className="label-icon">✉️</span>
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className={errors.email ? 'error' : ''}
+                placeholder="your.email@example.com"
+              />
+              {errors.email && <span className="error-text">{errors.email}</span>}
+            </div>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className={errors.email ? 'error' : ''}
-            />
-            {errors.email && <span className="error-text">{errors.email}</span>}
-          </div>
+          <div className="form-section">
+            <h3 className="section-title">Personal Information</h3>
+            
+            <div className="form-group">
+              <label htmlFor="fullName">
+                <span className="label-icon">🏷️</span>
+                Full Name
+              </label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                placeholder="John Doe"
+              />
+              <span className="helper-text">This name will be displayed on your profile</span>
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="fullName">Full Name</label>
-            <input
-              type="text"
-              id="fullName"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="phoneNumber">Phone Number</label>
-            <input
-              type="tel"
-              id="phoneNumber"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-            />
+            <div className="form-group">
+              <label htmlFor="phoneNumber">
+                <span className="label-icon">📱</span>
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                id="phoneNumber"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                placeholder="+1 (555) 000-0000"
+              />
+              <span className="helper-text">Optional: For account recovery</span>
+            </div>
           </div>
 
           <div className="button-group">
-            <button 
-              type="submit" 
-              className="btn-submit"
-              disabled={loading}
-            >
-              {loading ? 'Updating...' : 'Update Profile'}
-            </button>
             <button 
               type="button" 
               className="btn-cancel"
               onClick={() => navigate('/dashboard')}
             >
+              <span className="btn-icon">←</span>
               Cancel
+            </button>
+            <button 
+              type="submit" 
+              className="btn-submit"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <span className="spinner"></span>
+                  Updating...
+                </>
+              ) : (
+                <>
+                  <span className="btn-icon">💾</span>
+                  Save Changes
+                </>
+              )}
             </button>
           </div>
         </form>
