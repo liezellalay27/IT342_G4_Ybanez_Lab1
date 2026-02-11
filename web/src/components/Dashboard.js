@@ -57,7 +57,7 @@ const Dashboard = () => {
         <div className="actions-section">
           <h3>Quick Actions</h3>
           <div className="action-buttons">
-            <button className="btn-action">Edit Profile</button>
+            <button className="btn-action" onClick={() => navigate('/edit-profile')}>Edit Profile</button>
             <button className="btn-action">Change Password</button>
             <button className="btn-action">Account Settings</button>
           </div>

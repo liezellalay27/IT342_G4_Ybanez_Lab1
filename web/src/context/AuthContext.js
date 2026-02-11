@@ -12,16 +12,30 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
     const userData = localStorage.getItem('user');
     
-    if (token && userData) {
-      setUser(JSON.parse(userData));
+    if (token && userData && userData !== 'undefined' && userData !== 'null') {
+      try {
+        setUser(JSON.parse(userData));
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+      }
     }
     setLoading(false);
   }, []);
 
   const login = async (credentials) => {
     try {
-      const response = await authService.login(credentials);
-      const { token, user: userData } = response.data;
+      // Transform credentials to match backend expectation
+      const loginData = {
+        usernameOrEmail: credentials.email,
+        password: credentials.password
+      };
+      const response = await authService.login(loginData);
+      const { token, id, username, email, fullName } = response.data;
+      
+      // Create user object from response
+      const userData = { id, username, email, fullName };
       
       // Store token and user data
       localStorage.setItem('token', token);

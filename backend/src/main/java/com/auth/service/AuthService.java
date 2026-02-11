@@ -88,4 +88,41 @@ public class AuthService {
 
         return userResponse;
     }
+
+    @Transactional
+    public UserResponse updateProfile(String currentUsername, UpdateProfileRequest request) {
+        User user = userRepository.findByUsername(currentUsername)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Check if new username is taken by another user
+        if (!user.getUsername().equals(request.getUsername())) {
+            if (userRepository.existsByUsername(request.getUsername())) {
+                throw new RuntimeException("Username is already taken");
+            }
+        }
+
+        // Check if new email is taken by another user
+        if (!user.getEmail().equals(request.getEmail())) {
+            if (userRepository.existsByEmail(request.getEmail())) {
+                throw new RuntimeException("Email is already in use");
+            }
+        }
+
+        user.setUsername(request.getUsername());
+        user.setEmail(request.getEmail());
+        user.setFullName(request.getFullName());
+        user.setPhoneNumber(request.getPhoneNumber());
+
+        userRepository.save(user);
+
+        UserResponse userResponse = new UserResponse();
+        userResponse.setId(user.getId());
+        userResponse.setUsername(user.getUsername());
+        userResponse.setEmail(user.getEmail());
+        userResponse.setFullName(user.getFullName());
+        userResponse.setPhoneNumber(user.getPhoneNumber());
+        userResponse.setCreatedAt(user.getCreatedAt());
+
+        return userResponse;
+    }
 }

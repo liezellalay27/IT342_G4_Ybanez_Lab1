@@ -61,4 +61,20 @@ public class AuthController {
         SecurityContextHolder.clearContext();
         return ResponseEntity.ok(new MessageResponse("User logged out successfully!"));
     }
+
+    @PutMapping("/profile")
+    public ResponseEntity<?> updateProfile(@Valid @RequestBody UpdateProfileRequest updateRequest) {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String currentUsername = authentication.getName();
+            UserResponse userResponse = authService.updateProfile(currentUsername, updateRequest);
+            return ResponseEntity.ok(userResponse);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest()
+                    .body(new MessageResponse(e.getMessage(), false));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new MessageResponse("Error: " + e.getMessage(), false));
+        }
+    }
 }
