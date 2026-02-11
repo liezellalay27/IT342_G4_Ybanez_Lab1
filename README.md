@@ -13,12 +13,14 @@ This project implements a complete user authentication system following modern w
 - **User Registration** - New users can create accounts with username, email, and password
 - **User Login** - Secure authentication using JWT (JSON Web Tokens)
 - **Profile Dashboard** - Authenticated users can view their profile information
+- **Profile Editing** - Users can update their username, email, full name, and phone number
 - **Logout** - Users can securely logout, destroying their session
 - **Protected Routes** - Unauthorized users are redirected to login
 - **Password Security** - Passwords are encrypted using BCrypt
 - **Session Management** - JWT tokens for stateless authentication
 - **Input Validation** - Client-side and server-side validation
 - **Responsive Design** - Modern UI that works on all devices
+- **Database Integration** - MySQL database with proper schema design
 
 ### Key Features
 ✅ Email format validation  
@@ -29,6 +31,9 @@ This project implements a complete user authentication system following modern w
 ✅ CORS configuration  
 ✅ Error handling and user feedback  
 ✅ Persistent authentication  
+✅ Profile update functionality  
+✅ MySQL database integration  
+✅ Full backend implementation with Spring Boot  
 
 ---
 
@@ -42,21 +47,23 @@ This project implements a complete user authentication system following modern w
 - **CSS3** - Modern styling with gradients and animations
 
 ### Backend
-- **Spring Boot 3.x** - Java framework
+- **Spring Boot 3.2.0** - Java framework
 - **Java 19** - Programming language
 - **Spring Security** - Authentication and authorization
 - **Spring Data JPA** - Database ORM
-- **JWT (JSON Web Tokens)** - Token-based authentication
+- **JWT (jjwt 0.12.3)** - Token-based authentication
 - **BCrypt** - Password encryption
-- **MySQL/PostgreSQL** - Relational database
+- **MySQL** - Relational database (via XAMPP)
 - **Lombok** - Reduce boilerplate code
 - **Maven** - Dependency management
 
 ### Tools & Environment
-- **IntelliJ IDEA** - IDE for backend development
+- **IntelliJ IDEA 2022** - IDE for backend development
 - **VS Code** - IDE for frontend development
 - **Node.js & npm** - JavaScript runtime and package manager
 - **Git & GitHub** - Version control
+- **XAMPP** - MySQL database server
+- **phpMyAdmin** - Database management
 - **Postman** - API testing (optional)
 
 ---
@@ -74,24 +81,25 @@ This project implements a complete user authentication system following modern w
 1. **Navigate to backend directory:**
    ```bash
    cd backend
-   ```
+   ``Start MySQL (XAMPP):**
+   - Open XAMPP Control Panel
+   - Start MySQL service
 
-2. **Configure Database:**
+3. **Database is Already Configured:**
    
-   Edit `src/main/resources/application.properties`:
+   The `src/main/resources/application.properties` is already set up:
    ```properties
    # Database Configuration
-   spring.datasource.url=jdbc:mysql://localhost:3306/auth_db
-   spring.datasource.username=your_username
-   spring.datasource.password=your_password
+   spring.datasource.url=jdbc:mysql://localhost:3306/auth_system_db?createDatabaseIfNotExist=true
+   spring.datasource.username=root
+   spring.datasource.password=
    
    # JWT Secret Key
-   jwt.secret=your-secret-key-here
+   jwt.secret=YourSecretKeyHereMustBeAtLeast256BitsLongForHS256Algorithm
    jwt.expiration=86400000
    ```
 
-3. **Create Database:**
-   ```sql
+   Database `auth_system_db` and `users` table are already created.sql
    CREATE DATABASE auth_db;
    ```
 
