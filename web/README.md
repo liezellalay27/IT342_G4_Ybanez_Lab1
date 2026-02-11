@@ -183,7 +183,7 @@ This project is part of IT342_G4_Ybanez_Lab1
 
 ## 👥 Authors
 
-Group 4 - Ybanez
+Liezel A. Ybañez
 
 ---
 

@@ -407,7 +407,7 @@ IT342_G4_Ybanez_Lab1/
 
 ## 👥 Team
 
-**Group 4 - Ybanez**
+**Liezel A. Ybañez**
 
 ---
 
