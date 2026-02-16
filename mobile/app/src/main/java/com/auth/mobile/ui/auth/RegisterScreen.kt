@@ -33,8 +33,12 @@ fun RegisterScreen(
     
     LaunchedEffect(uiState.successMessage) {
         if (uiState.successMessage != null) {
-            kotlinx.coroutines.delay(1500)
-            onNavigateToLogin()
+            try {
+                kotlinx.coroutines.delay(1500)
+                onNavigateToLogin()
+            } catch (e: Exception) {
+                // Handle cancellation gracefully
+            }
         }
     }
     

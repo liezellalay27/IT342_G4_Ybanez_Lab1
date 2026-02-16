@@ -3,6 +3,7 @@ package com.auth.mobile.data.repository
 import com.auth.mobile.data.local.TokenManager
 import com.auth.mobile.data.model.*
 import com.auth.mobile.data.remote.ApiClient
+import com.auth.mobile.data.remote.ErrorParser
 import kotlinx.coroutines.flow.first
 
 class AuthRepository(private val tokenManager: TokenManager) {
@@ -15,10 +16,15 @@ class AuthRepository(private val tokenManager: TokenManager) {
             if (response.isSuccessful) {
                 Result.success(response.body()?.message ?: "Registration successful")
             } else {
-                Result.failure(Exception(response.errorBody()?.string() ?: "Registration failed"))
+                val errorMsg = ErrorParser.parseErrorBody(response.errorBody()?.string())
+                Result.failure(Exception(errorMsg))
             }
+        } catch (e: java.net.ConnectException) {
+            Result.failure(Exception("Cannot connect to server. Please check if backend is running."))
+        } catch (e: java.net.SocketTimeoutException) {
+            Result.failure(Exception("Connection timeout. Please try again."))
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception(e.message ?: "Registration failed. Please try again."))
         }
     }
     
@@ -28,15 +34,29 @@ class AuthRepository(private val tokenManager: TokenManager) {
             if (response.isSuccessful) {
                 response.body()?.let { authResponse ->
                     tokenManager.saveToken(authResponse.token)
-                    tokenManager.saveUser(authResponse.user)
+                    // Convert flat AuthResponse to User object
+                    val user = User(
+                        id = authResponse.id,
+                        username = authResponse.username,
+                        email = authResponse.email,
+                        fullName = authResponse.fullName,
+                        phoneNumber = null,
+                        enabled = true
+                    )
+                    tokenManager.saveUser(user)
                     ApiClient.setToken(authResponse.token)
                     Result.success(authResponse)
                 } ?: Result.failure(Exception("Empty response"))
             } else {
-                Result.failure(Exception(response.errorBody()?.string() ?: "Login failed"))
+                val errorMsg = ErrorParser.parseErrorBody(response.errorBody()?.string())
+                Result.failure(Exception(errorMsg))
             }
+        } catch (e: java.net.ConnectException) {
+            Result.failure(Exception("Cannot connect to server. Please check if backend is running."))
+        } catch (e: java.net.SocketTimeoutException) {
+            Result.failure(Exception("Connection timeout. Please try again."))
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception(e.message ?: "Login failed. Please try again."))
         }
     }
     
@@ -57,15 +77,28 @@ class AuthRepository(private val tokenManager: TokenManager) {
         return try {
             val response = api.getProfile()
             if (response.isSuccessful) {
-                response.body()?.user?.let { user ->
+                response.body()?.let { userResponse ->
+                    val user = User(
+                        id = userResponse.id,
+                        username = userResponse.username,
+                        email = userResponse.email,
+                        fullName = userResponse.fullName,
+                        phoneNumber = userResponse.phoneNumber,
+                        enabled = true
+                    )
                     tokenManager.saveUser(user)
                     Result.success(user)
                 } ?: Result.failure(Exception("Empty response"))
             } else {
-                Result.failure(Exception(response.errorBody()?.string() ?: "Failed to get profile"))
+                val errorMsg = ErrorParser.parseErrorBody(response.errorBody()?.string())
+                Result.failure(Exception(errorMsg))
             }
+        } catch (e: java.net.ConnectException) {
+            Result.failure(Exception("Cannot connect to server. Please check if backend is running."))
+        } catch (e: java.net.SocketTimeoutException) {
+            Result.failure(Exception("Connection timeout. Please try again."))
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception(e.message ?: "Failed to get profile. Please try again."))
         }
     }
     
@@ -73,15 +106,28 @@ class AuthRepository(private val tokenManager: TokenManager) {
         return try {
             val response = api.updateProfile(request)
             if (response.isSuccessful) {
-                response.body()?.user?.let { user ->
+                response.body()?.let { userResponse ->
+                    val user = User(
+                        id = userResponse.id,
+                        username = userResponse.username,
+                        email = userResponse.email,
+                        fullName = userResponse.fullName,
+                        phoneNumber = userResponse.phoneNumber,
+                        enabled = true
+                    )
                     tokenManager.saveUser(user)
                     Result.success(user)
                 } ?: Result.failure(Exception("Empty response"))
             } else {
-                Result.failure(Exception(response.errorBody()?.string() ?: "Failed to update profile"))
+                val errorMsg = ErrorParser.parseErrorBody(response.errorBody()?.string())
+                Result.failure(Exception(errorMsg))
             }
+        } catch (e: java.net.ConnectException) {
+            Result.failure(Exception("Cannot connect to server. Please check if backend is running."))
+        } catch (e: java.net.SocketTimeoutException) {
+            Result.failure(Exception("Connection timeout. Please try again."))
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception(e.message ?: "Failed to update profile. Please try again."))
         }
     }
     

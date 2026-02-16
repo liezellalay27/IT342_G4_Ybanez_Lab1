@@ -19,7 +19,7 @@ interface AuthApi {
     @POST("auth/logout")
     suspend fun logout(): Response<MessageResponse>
     
-    @GET("auth/profile")
+    @GET("auth/me")
     suspend fun getProfile(): Response<UserResponse>
     
     @PUT("auth/profile")
