@@ -31,13 +31,23 @@ data class UpdateProfileRequest(
 
 data class AuthResponse(
     val token: String,
-    val user: User
+    val type: String = "Bearer",
+    val id: Long,
+    val username: String,
+    val email: String,
+    val fullName: String?
 )
 
 data class MessageResponse(
-    val message: String
+    val message: String,
+    val success: Boolean = true
 )
 
 data class UserResponse(
-    val user: User
+    val id: Long,
+    val username: String,
+    val email: String,
+    val fullName: String?,
+    val phoneNumber: String?,
+    val createdAt: String? = null
 )
