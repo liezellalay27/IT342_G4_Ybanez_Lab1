@@ -10,7 +10,7 @@ data class User(
 )
 
 data class LoginRequest(
-    val username: String,
+    val usernameOrEmail: String,
     val password: String
 )
 
