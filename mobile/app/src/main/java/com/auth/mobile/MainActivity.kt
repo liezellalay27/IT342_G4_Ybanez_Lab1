@@ -15,7 +15,6 @@ import com.auth.mobile.navigation.AppNavigation
 import com.auth.mobile.navigation.Screen
 import com.auth.mobile.ui.theme.AuthMobileAppTheme
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     private lateinit var tokenManager: TokenManager
@@ -34,17 +33,14 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     var startDestination by remember { mutableStateOf<String?>(null) }
-                    val scope = rememberCoroutineScope()
                     
                     LaunchedEffect(Unit) {
-                        scope.launch {
-                            repository.initializeToken()
-                            val isLoggedIn = repository.isLoggedIn()
-                            startDestination = if (isLoggedIn) {
-                                Screen.Dashboard.route
-                            } else {
-                                Screen.Login.route
-                            }
+                        repository.initializeToken()
+                        val isLoggedIn = repository.isLoggedIn()
+                        startDestination = if (isLoggedIn) {
+                            Screen.Dashboard.route
+                        } else {
+                            Screen.Login.route
                         }
                     }
                     
