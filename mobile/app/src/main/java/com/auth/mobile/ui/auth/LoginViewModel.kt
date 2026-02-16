@@ -43,7 +43,7 @@ class LoginViewModel(private val repository: AuthRepository) : ViewModel() {
             
             val result = repository.login(
                 LoginRequest(
-                    username = state.username,
+                    usernameOrEmail = state.username,
                     password = state.password
                 )
             )
