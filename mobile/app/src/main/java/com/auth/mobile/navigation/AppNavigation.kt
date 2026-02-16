@@ -1,11 +1,13 @@
 package com.auth.mobile.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.auth.mobile.data.local.TokenManager
 import com.auth.mobile.data.repository.AuthRepository
+import com.auth.mobile.ui.AuthViewModelFactory
 import com.auth.mobile.ui.auth.*
 import com.auth.mobile.ui.dashboard.DashboardScreen
 import com.auth.mobile.ui.dashboard.DashboardViewModel
@@ -19,13 +21,14 @@ fun AppNavigation(
     tokenManager: TokenManager
 ) {
     val repository = AuthRepository(tokenManager)
+    val viewModelFactory = AuthViewModelFactory(repository)
     
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
         composable(Screen.Login.route) {
-            val viewModel = LoginViewModel(repository)
+            val viewModel: LoginViewModel = viewModel(factory = viewModelFactory)
             LoginScreen(
                 viewModel = viewModel,
                 onNavigateToRegister = {
@@ -40,7 +43,7 @@ fun AppNavigation(
         }
         
         composable(Screen.Register.route) {
-            val viewModel = RegisterViewModel(repository)
+            val viewModel: RegisterViewModel = viewModel(factory = viewModelFactory)
             RegisterScreen(
                 viewModel = viewModel,
                 onNavigateToLogin = {
@@ -50,7 +53,7 @@ fun AppNavigation(
         }
         
         composable(Screen.Dashboard.route) {
-            val viewModel = DashboardViewModel(repository)
+            val viewModel: DashboardViewModel = viewModel(factory = viewModelFactory)
             DashboardScreen(
                 viewModel = viewModel,
                 onNavigateToEditProfile = {
@@ -65,7 +68,7 @@ fun AppNavigation(
         }
         
         composable(Screen.EditProfile.route) {
-            val viewModel = EditProfileViewModel(repository)
+            val viewModel: EditProfileViewModel = viewModel(factory = viewModelFactory)
             EditProfileScreen(
                 viewModel = viewModel,
                 onNavigateBack = {
