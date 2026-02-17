@@ -1,18 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import './Homepage.css';
 
 function Homepage() {
   const navigate = useNavigate();
-  const { user } = useAuth();
-
-  // If already logged in, redirect to dashboard
-  React.useEffect(() => {
-    if (user) {
-      navigate('/dashboard');
-    }
-  }, [user, navigate]);
 
   return (
     <div className="homepage">

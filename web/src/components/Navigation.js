@@ -21,6 +21,9 @@ const Navigation = () => {
         <div className="nav-links">
           {!isAuthenticated ? (
             <>
+              <Link to="/" className={isActive('/')}>
+                Home
+              </Link>
               <Link to="/login" className={isActive('/login')}>
                 Login
               </Link>
@@ -32,6 +35,9 @@ const Navigation = () => {
             <>
               <Link to="/dashboard" className={isActive('/dashboard')}>
                 Dashboard
+              </Link>
+              <Link to="/profile" className={isActive('/profile')}>
+                Profile
               </Link>
               <button onClick={logout} className="nav-logout-btn">
                 Logout

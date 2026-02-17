@@ -7,6 +7,7 @@ import Homepage from './components/Homepage';
 import Login from './components/Login';
 import Registration from './components/Registration';
 import Dashboard from './components/Dashboard';
+import Profile from './components/Profile';
 import EditProfile from './components/EditProfile';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
@@ -47,6 +48,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Dashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/profile" 
+                element={
+                  <ProtectedRoute>
+                    <Profile />
                   </ProtectedRoute>
                 } 
               />
