@@ -1,13 +1,21 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { useAuth } from './context/AuthContext';
 import Navigation from './components/Navigation';
+import Homepage from './components/Homepage';
 import Login from './components/Login';
 import Registration from './components/Registration';
 import Dashboard from './components/Dashboard';
 import EditProfile from './components/EditProfile';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
+
+// Component to redirect logged-in users away from login/register
+const PublicRoute = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? <Navigate to="/dashboard" replace /> : children;
+};
 
 function App() {
   return (
@@ -17,9 +25,23 @@ function App() {
           <Navigation />
           <div className="container">
             <Routes>
-              <Route path="/" element={<Navigate to="/login" replace />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Registration />} />
+              <Route path="/" element={<Homepage />} />
+              <Route 
+                path="/login" 
+                element={
+                  <PublicRoute>
+                    <Login />
+                  </PublicRoute>
+                } 
+              />
+              <Route 
+                path="/register" 
+                element={
+                  <PublicRoute>
+                    <Registration />
+                  </PublicRoute>
+                } 
+              />
               <Route 
                 path="/dashboard" 
                 element={
@@ -36,7 +58,7 @@ function App() {
                   </ProtectedRoute>
                 } 
               />
-              <Route path="*" element={<Navigate to="/login" replace />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </div>
         </div>
