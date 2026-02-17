@@ -5,50 +5,45 @@ import './Dashboard.css';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
+  const { user } = useAuth();
 
   return (
     <div className="dashboard-container">
       <div className="dashboard-card">
         <div className="dashboard-header">
           <h2>Dashboard</h2>
-          <button onClick={handleLogout} className="btn-logout">
-            Logout
-          </button>
         </div>
 
-        <div className="profile-section">
+        <div className="welcome-section">
           <div className="profile-avatar">
             <span>{user?.username?.charAt(0).toUpperCase() || 'U'}</span>
           </div>
-          
-          <div className="profile-info">
-            <h3>Welcome, {user?.username}!</h3>
-            <p className="user-email">{user?.email}</p>
-          </div>
+          <h3>Welcome back, {user?.username}!</h3>
+          <p className="welcome-subtitle">Here's your account overview</p>
         </div>
 
         <div className="stats-grid">
           <div className="stat-card">
+            <div className="stat-icon">✅</div>
             <h4>Account Status</h4>
             <p className="stat-value">Active</p>
           </div>
           
           <div className="stat-card">
+            <div className="stat-icon">📅</div>
             <h4>Member Since</h4>
             <p className="stat-value">
               {user?.createdAt 
-                ? new Date(user.createdAt).toLocaleDateString() 
+                ? new Date(user.createdAt).toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'short' 
+                  }) 
                 : 'Recently'}
             </p>
           </div>
           
           <div className="stat-card">
+            <div className="stat-icon">🆔</div>
             <h4>User ID</h4>
             <p className="stat-value">#{user?.id || 'N/A'}</p>
           </div>
@@ -57,30 +52,41 @@ const Dashboard = () => {
         <div className="actions-section">
           <h3>Quick Actions</h3>
           <div className="action-buttons">
-            <button className="btn-action" onClick={() => navigate('/edit-profile')}>Edit Profile</button>
-            <button className="btn-action">Change Password</button>
-            <button className="btn-action">Account Settings</button>
+            <button className="btn-action" onClick={() => navigate('/profile')}>
+              <span className="btn-icon">👤</span>
+              View Profile
+            </button>
+            <button className="btn-action" onClick={() => navigate('/edit-profile')}>
+              <span className="btn-icon">✏️</span>
+              Edit Profile
+            </button>
+            <button className="btn-action">
+              <span className="btn-icon">🔒</span>
+              Change Password
+            </button>
+            <button className="btn-action">
+              <span className="btn-icon">⚙️</span>
+              Settings
+            </button>
           </div>
         </div>
 
-        <div className="info-section">
-          <h3>Account Information</h3>
-          <div className="info-grid">
-            <div className="info-item">
-              <span className="info-label">Username:</span>
-              <span className="info-value">{user?.username}</span>
+        <div className="recent-activity">
+          <h3>Recent Activity</h3>
+          <div className="activity-list">
+            <div className="activity-item">
+              <div className="activity-icon">🔐</div>
+              <div className="activity-content">
+                <p className="activity-title">Login Successful</p>
+                <p className="activity-time">Today</p>
+              </div>
             </div>
-            <div className="info-item">
-              <span className="info-label">Email:</span>
-              <span className="info-value">{user?.email}</span>
-            </div>
-            <div className="info-item">
-              <span className="info-label">Role:</span>
-              <span className="info-value">{user?.role || 'User'}</span>
-            </div>
-            <div className="info-item">
-              <span className="info-label">Status:</span>
-              <span className="info-value status-active">Active</span>
+            <div className="activity-item">
+              <div className="activity-icon">✨</div>
+              <div className="activity-content">
+                <p className="activity-title">Welcome to Dashboard</p>
+                <p className="activity-time">Now</p>
+              </div>
             </div>
           </div>
         </div>
