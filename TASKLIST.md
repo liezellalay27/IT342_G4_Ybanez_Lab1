@@ -1,6 +1,6 @@
 # Task List - User Authentication System
 **Project:** IT342_G4_Ybanez_Lab1  
-**Date Updated:** February 11, 2026
+**Date Updated:** February 17, 2026
 
 ---
 
@@ -34,11 +34,45 @@
 - [x] Fixed localStorage parsing errors in AuthContext
 - [x] Implemented EditProfile component with validation
 - [x] Added profile update functionality
+- [x] Implemented Homepage component with hero section and features
+- [x] Updated routing: Homepage as default route (/)
+- [x] Secured endpoints with PublicRoute guard (prevent logged-in users from accessing login/register)
 - [x] Created comprehensive documentation:
   - README.md (full documentation)
   - SETUP.md (quick setup guide)
   - ARCHITECTURE.md (technical architecture)
   - IMPLEMENTATION_SUMMARY.md (what's been built)
+
+### Mobile App (Android/Kotlin)
+- [x] Created Android project with Jetpack Compose
+- [x] Set up Gradle build configuration (build.gradle.kts)
+- [x] Configured minSdk 24, targetSdk 34, compileSdk 34
+- [x] Implemented MVVM architecture with ViewModels
+- [x] Created data models (User, LoginRequest, RegisterRequest, AuthResponse)
+- [x] Implemented Retrofit API client with OkHttp interceptors
+- [x] Created AuthApi interface for REST endpoints
+- [x] Implemented AuthRepository with error handling
+- [x] Created TokenManager for DataStore persistence
+- [x] Implemented ViewModelFactory for proper lifecycle management
+- [x] Created navigation graph (AppNavigation.kt)
+- [x] Implemented UI screens with Material3:
+  - LoginScreen
+  - RegisterScreen
+  - DashboardScreen
+  - EditProfileScreen
+- [x] Fixed MainActivity coroutine scope crash
+- [x] Fixed ViewModel instantiation crashes (implemented factory pattern)
+- [x] Fixed API endpoint mismatch (/auth/profile → /auth/me)
+- [x] Created ErrorParser utility for robust error handling
+- [x] Fixed RegisterScreen navigation cancellation crash
+- [x] Fixed data models to match backend response structure
+- [x] Added explicit Gson dependency (2.10.1)
+- [x] Fixed Compose BOM version incompatibility (2024.01.00 → 2024.02.00)
+- [x] Added explicit animation dependency for CircularProgressIndicator
+- [x] Updated API base URL for physical device testing (192.168.1.101)
+- [x] Fixed login field mapping (username → usernameOrEmail)
+- [x] App successfully launches without crashes
+- [x] CircularProgressIndicator NoSuchMethodError resolved
 
 ### Backend (Spring Boot)
 - [x] Created backend folder structure
@@ -71,22 +105,70 @@
 - [x] Added YBAÑEZ-FRS_FINAL.docx
 - [x] Added YBAÑEZ-FRS_FINAL.pdf
 
+### Version Control & Git
+- [x] Created permanent development branches:
+  - web-development (for React web app)
+  - backend-development (for Spring Boot API)
+  - mobile-development (for Android/Kotlin app)
+- [x] Configured GitHub remote repository
+- [x] All branches synced with origin
+- [x] Granular commit history with descriptive messages
+
 ---
 
 ## 🔄 COMPLETED FEATURES
 
 ### Authentication System
-- ✅ User registration with validation
-- ✅ User login with JWT tokens
-- ✅ Profile viewing on dashboard
-- ✅ Profile editing functionality
-- ✅ Logout functionality
-- ✅ Protected routes
-- ✅ Session persistence
+- ✅ User registration with validation (Web + Mobile)
+- ✅ User login with JWT tokens (Web + Mobile)
+- ✅ Profile viewing on dashboard (Web + Mobile)
+- ✅ Profile editing functionality (Web + Mobile)
+- ✅ Logout functionality (Web + Mobile)
+- ✅ Protected routes (Web + Mobile)
+- ✅ Session persistence (Web + Mobile)
+- ✅ Error handling and user feedback (Web + Mobile)
+
+### Multi-Platform Support
+- ✅ Web Application (React.js) - Running on http://localhost:3000
+- ✅ Mobile Application (Android/Kotlin) - Running on physical device
+- ✅ Backend API (Spring Boot) - Running on http://localhost:8080
+- ✅ Cross-platform authentication with single backend
 
 ---
 
 ## 📅 PROJECT HISTORY
+
+### February 17, 2026
+**Mobile App Crisis Resolution & Multi-Platform Integration**
+- ✅ Investigated and diagnosed mobile app crash issues
+- ✅ Fixed MainActivity coroutine scope nesting crash
+- ✅ Implemented ViewModelFactory for proper ViewModel lifecycle
+- ✅ Fixed API endpoint mismatch (/auth/profile → /auth/me)
+- ✅ Added ErrorParser utility for robust error handling
+- ✅ Fixed RegisterScreen navigation cancellation crash
+- ✅ Fixed data models to match backend response structure
+- ✅ Created permanent development branches (web-development, backend-development, mobile-development)
+- ✅ Fixed critical Compose BOM version incompatibility (2024.01.00 → 2024.02.00)
+- ✅ Resolved CircularProgressIndicator NoSuchMethodError
+- ✅ Updated API URL for physical device testing (192.168.1.101)
+- ✅ Fixed login field mapping (username → usernameOrEmail) on both mobile and web
+- ✅ Updated web routing: Homepage as default route
+- ✅ Secured web endpoints with PublicRoute guard
+- ✅ All platforms now functional and integrated with backend
+
+**Commits Made:**
+- `34885b1` - Fix MainActivity coroutine scope crash
+- `f2aa458` - Implement ViewModelFactory for proper lifecycle
+- `33e906d` - Fix API endpoint /auth/profile to /auth/me
+- `2ca6ab4` - Add ErrorParser utility for error handling
+- `fa492ce` - Update AppNavigation to use ViewModelFactory
+- `128c9ed` - Fix RegisterScreen navigation crash
+- `a95b85e` - Fix data models to match backend structure
+- `56908db` - Add Homepage component
+- `f61b70e` - Update Compose BOM to 2024.02.00
+- `b621c18` - Update API URL for physical device
+- `e0c204c` - Fix login field to usernameOrEmail (mobile)
+- `52f376d` - Update routing and secure endpoints (web)
 
 ### February 11, 2026
 - ✅ Fixed login authentication (usernameOrEmail field mapping)
@@ -169,45 +251,109 @@
 
 ---
 
-## 🎯 PROJECT STATUS: COMPLETE
+## 🎯 PROJECT STATUS: FULLY OPERATIONAL
 
-All core features have been implemented and tested successfully. The authentication system is fully functional with:
-- User registration and login
-- JWT-based authentication
-- Profile management
-- Database integration
-- Full frontend-backend integration
-- [ ] Test protected routes (JWT validation)
-- [ ] Test logout functionality
-- [ ] End-to-end testing
+All core features have been implemented and tested successfully across all platforms. The multi-platform authentication system is fully functional with:
+- ✅ Web application (React.js) with responsive UI
+- ✅ Mobile application (Android/Kotlin) with Material3 design
+- ✅ Backend API (Spring Boot) with JWT authentication
+- ✅ MySQL database integration
+- ✅ Full frontend-backend integration
+- ✅ Protected routes with JWT validation
+- ✅ Logout functionality
+- ✅ Cross-platform data synchronization
+- ✅ Error handling and user feedback
+- ✅ End-to-end testing completed
+
+### Current Platform Status
+- **Web Frontend:** ✅ 100% Complete and Running (http://localhost:3000)
+- **Mobile App:** ✅ 100% Complete and Running (Physical Device)
+- **Backend API:** ✅ 100% Complete and Running (http://localhost:8080)
+- **Database:** ✅ 100% Complete and Connected (MySQL via XAMPP)
+- **Integration:** ✅ 100% Complete and Tested
+
+### Remaining Tasks
+
+#### Testing & Quality Assurance
+- [ ] Comprehensive end-to-end testing on different devices
+- [ ] Performance testing under load
+- [ ] Security audit and penetration testing
+- [ ] User acceptance testing (UAT)
 
 ### Deployment (Optional)
-- [ ] Prepare production build of frontend (npm run build)
+- [ ] Prepare production build of web frontend (npm run build)
+- [ ] Generate signed APK for mobile app
 - [ ] Package backend as JAR file
-- [ ] Deploy to server/cloud platform
+- [ ] Deploy to server/cloud platform (Azure/AWS/GCP)
 - [ ] Configure production database
-- [ ] Set up HTTPS
+- [ ] Set up HTTPS with SSL certificates
+- [ ] Configure CI/CD pipeline
+
+### Future Enhancements (Optional)
+- [ ] Add password reset functionality
+- [ ] Implement email verification
+- [ ] Add two-factor authentication (2FA)
+- [ ] Add social media login (Google, Facebook)
+- [ ] Implement refresh token mechanism
+- [ ] Add user roles and permissions
+- [ ] Create admin dashboard
 
 ---
 
 ## 📝 Notes
 
 ### Current Status
-- **Frontend:** ✅ 100% Complete and Running
-- **Backend:** 🔄 5% Complete (Entity created only)
-- **Database:** ⏳ Not started
-- **Integration:** ⏳ Not started
+- **Web Frontend:** ✅ 100% Complete and Running
+- **Mobile App:** ✅ 100% Complete and Running
+- **Backend:** ✅ 100% Complete and Running
+- **Database:** ✅ 100% Complete and Connected
+- **Integration:** ✅ 100% Complete and Tested
+
+### Recent Fixes (February 17, 2026)
+- Fixed mobile app crashes (multiple coroutine and lifecycle issues)
+- Resolved Compose BOM version incompatibility
+- Updated API configuration for physical device testing
+- Secured web endpoints with proper authentication guards
+- Unified login field naming across platforms (usernameOrEmail)
 
 ### Blockers
 - None currently
 
-### Next Immediate Steps
-1. Complete Spring Boot backend implementation
-2. Set up database (MySQL/PostgreSQL)
-3. Test backend endpoints
-4. Integrate frontend with backend
-5. Perform end-to-end testing
+### Architecture Overview
+```
+┌─────────────────┐         ┌─────────────────┐
+│   Web Client    │         │  Mobile Client  │
+│   (React.js)    │         │ (Android/Kotlin)│
+│  Port: 3000     │         │   APK/Device    │
+└────────┬────────┘         └────────┬────────┘
+         │                           │
+         │      HTTP/REST API        │
+         │      (JWT Auth)           │
+         └───────────┬───────────────┘
+                     │
+         ┌───────────▼───────────┐
+         │   Backend Server      │
+         │   (Spring Boot)       │
+         │   Port: 8080          │
+         │   - JWT Provider      │
+         │   - Security Config   │
+         │   - CORS Enabled      │
+         └───────────┬───────────┘
+                     │
+         ┌───────────▼───────────┐
+         │   MySQL Database      │
+         │   (XAMPP)             │
+         │   Port: 3307          │
+         │   DB: auth_system_db  │
+         └───────────────────────┘
+```
+
+### Development Branches
+- **main** - Production-ready code
+- **web-development** - Web frontend development
+- **backend-development** - Backend API development
+- **mobile-development** - Mobile app development
 
 ---
 
-**Last Updated:** February 4, 2026
+**Last Updated:** February 17, 2026
